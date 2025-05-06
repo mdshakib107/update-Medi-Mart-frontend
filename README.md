@@ -8,6 +8,8 @@ The **Medicine E-Commerce Shop** is an online platform where users can browse, s
 
 ## 🌐 Live URL: 
 [[MediMart💊](https://medi-mart-night-omega.vercel.app/)]
+## 🌐 Live URL(Backend): 
+[[MediMart💊] https://medi-mart-night.vercel.app/
 
 ## Key Features:
 
