@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "aos/dist/aos.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -172,4 +173,8 @@
 
 .animate-fade-slide-in {
   animation: fade-slide-in 0.3s ease-out;
+}
+
+html {
+  scroll-behavior: smooth;
 }

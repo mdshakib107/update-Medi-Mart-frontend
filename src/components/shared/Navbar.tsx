@@ -3,7 +3,7 @@
 import AnimatedLogo from "@/assets/images/logo/AnimatedLogo";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/contexts/UserContext";
-import { LogOut, Menu, ShoppingBasket, ShoppingCart, X } from "lucide-react";
+import { LogOut, Menu, ShoppingCart, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -27,9 +27,11 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 const navItems = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
+  { label: "Lab Tests", href: "/labtests" },
+  { label: "Blogs", href: "/blogs" },
+  { label: "Offers", href: "/offers" },
   { label: "About", href: "/about" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
+
   // { label: "Services", href: "/services" },
   // { label: "Contact", href: "/contact" },
 ];
@@ -43,7 +45,12 @@ const Navbar = () => {
 
   //* redux
   const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.cart.medicines);
+  const products = useAppSelector((state) => state.cart.medicines);
+
+  const totalOrderQuantity = products.reduce(
+    (sum, item) => sum + item.orderQuantity,
+    0
+  );
 
   const handleLogOut = async () => {
     await logout();
@@ -75,7 +82,13 @@ const Navbar = () => {
             <Link
               key={item.href}
               href={item.href}
-              className="text-base text-black hover:text-[#4F46E5] transition"
+              //   className="text-base text-black hover:text-[#4F46E5] transition"
+              // >
+              className={`relative pb-1 transition-colors hover:text-[#4F46E5] duration-300 ${
+                pathname === item.href
+                  ? "text-[#4F46E5] font-bold"
+                  : "text-base"
+              } group`}
             >
               {item.label}
             </Link>
@@ -135,16 +148,21 @@ const Navbar = () => {
               <Button variant="outline">Login</Button>
             </Link>
           )}
-          <Link href={"/cart"} className="relative">
+          <Link
+            href={"/cart"}
+            className={`relative pb-1 transition-colors hover:text-[#4F46E5] duration-300 ${
+              pathname === "/cart" ? "text-[#4F46E5] font-bold" : "text-base"
+            } group relative`}
+          >
             <ShoppingCart
-              className="cursor-pointer hover:scale-105 border-2 border-gray-300 rounded-full"
+              className="cursor-pointer hover:scale-105 border-0 border-gray-300 "
               size={30}
             />
             <Badge
               variant="outline"
-              className="absolute -top-2 -right-2 bg-blue-300"
+              className="absolute -top-2 -right-2 bg-pink-400 text-white"
             >
-              {cartItems.length}
+              {totalOrderQuantity}
             </Badge>
           </Link>
         </nav>
@@ -158,13 +176,21 @@ const Navbar = () => {
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </Button>
-          <Link href={"/cart"} className="relative">
-            <ShoppingBasket
-              className="cursor-pointer hover:scale-105 border-2 border-gray-200 rounded-full"
+          <Link
+            href={"/cart"}
+            className={`relative pb-1 transition-colors hover:text-[#4F46E5] duration-300 ${
+              pathname === "/cart" ? "text-[#4F46E5] font-bold" : "text-base"
+            } group relative`}
+          >
+            <ShoppingCart
+              className="cursor-pointer hover:scale-105 border-0 border-gray-300 "
               size={30}
             />
-            <Badge variant="outline" className="absolute -top-2 -right-2">
-              {cartItems.length}
+            <Badge
+              variant="outline"
+              className="absolute -top-2 -right-2 bg-pink-400"
+            >
+              {totalOrderQuantity}
             </Badge>
           </Link>
         </div>

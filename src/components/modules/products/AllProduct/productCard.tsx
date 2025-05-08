@@ -9,11 +9,13 @@ import { ShoppingCart, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const ProductCard = ({ medicine }: { medicine: TMedicine }) => {
   const dispatch = useAppDispatch();
 
   const handleAddProduct = (medicine: TMedicine) => {
+    toast.success("Product Added Succesfully");
     dispatch(addProduct(medicine));
   };
 

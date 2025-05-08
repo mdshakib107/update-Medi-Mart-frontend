@@ -4,12 +4,14 @@
 import Loading from "@/components/shared/Loading";
 import { getAllProducts } from "@/services/Product";
 import { TMedicine } from "@/types";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ProductCard from "../../products/AllProduct/productCard";
 
 const FeaturedSection = () => {
   const [products, setProducts] = useState<TMedicine[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const fetchFeaturedProducts = async () => {
     try {
@@ -29,7 +31,7 @@ const FeaturedSection = () => {
   }, []);
 
   return (
-    <section className="py-12 container mx-auto px-4 md:px-0">
+    <section className="py-12 w-[90%]  mx-auto  md:px-0">
       <div className="mb-8 text-center">
         <h2 className="text-4xl font-extrabold text-center mb-2 bg-gradient-to-r from-[#4F46E5] to-rose-500 bg-clip-text text-transparent tracking-wide">
           Featured Products
@@ -38,7 +40,14 @@ const FeaturedSection = () => {
           Discover our top-selling in-stock items.
         </p>
       </div>
-
+      <div className="text-end">
+        <button
+          className=" text-black drop-shadow-lg hover:text-gray-600 h-12 cursor-pointer font-semibold"
+          onClick={() => router.push("/shop")}
+        >
+          View All
+        </button>
+      </div>
       {loading ? (
         <div className="text-center">
           <Loading />
@@ -54,7 +63,7 @@ const FeaturedSection = () => {
               // Then sort by price (high to low)
               return b.price - a.price;
             }) // high to low
-            ?.slice(0, 6) // just first 6 items from the response
+            ?.slice(0, 4) // just first 6 items from the response
             .map((medicine, index) => (
               <ProductCard
                 key={`${medicine._id}-${index}`}

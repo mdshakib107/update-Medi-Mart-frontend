@@ -8,6 +8,7 @@ const HomePage = () => {
   return (
     <>
       {/* <Navbar /> */}
+
       <main className="min-h-screen">
         <HeroSection />
         <OfferCarousel />

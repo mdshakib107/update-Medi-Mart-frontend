@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import Logo from "@/assets/images/logo/Logo";
-import CustomButton from "@/components/shared/CustomButton";
 import {
   Form,
   FormControl,
@@ -26,12 +24,12 @@ import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 
 export default function LoginForm() {
-  // react hook form
+  //* react hook form
   const form = useForm({
     resolver: zodResolver(loginSchema),
   });
 
-  // toggle password
+  //* toggle password
   const [showPassword, setShowPassword] = useState(false);
 
   const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
@@ -81,15 +79,53 @@ export default function LoginForm() {
     }
   };
 
+  //! Function to fill credentials
+  const fillCredentials = (type: "admin" | "user") => {
+    const credentials = {
+      admin: {
+        email: "mina@mail.com",
+        password: "1234",
+      },
+      user: {
+        email: "nina@mail.com",
+        password: "1234",
+      },
+    };
+
+    form.setValue("email", credentials[type].email);
+    form.setValue("password", credentials[type].password);
+  };
+
   return (
-    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
-      <div className="flex items-center space-x-4 ">
-        <Logo />
+    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5 space-y-6">
+      {/* logo */}
+
+      <div className="text-center ">
         <div>
-          <h1 className="text-xl font-semibold">Login</h1>
-          <p className="font-extralight text-sm text-gray-600">Welcome back!</p>
+          <h1 className="text-4xl font-extrabold text-center mb-2 p-2 bg-gradient-to-r from-[#4F46E5] to-rose-500 bg-clip-text text-transparent tracking-wide">
+            Login
+          </h1>
+          <p className="text-sm text-[#4F46E5]">Welcome back dear user!</p>
         </div>
       </div>
+
+      {/* Buttons to fill credentials */}
+      <div className="flex justify-around space-x-2">
+        <button
+          className=" mt-4 w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-500 hover:to-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 active:scale-95"
+          onClick={() => fillCredentials("admin")}
+        >
+          Admin Credentials
+        </button>
+        <button
+          className=" mt-4 w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-500 hover:to-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 active:scale-95"
+          onClick={() => fillCredentials("user")}
+        >
+          User Credentials
+        </button>
+      </div>
+
+      {/* form */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -141,18 +177,39 @@ export default function LoginForm() {
             />
           </div>
 
-          <CustomButton
+          {/* <CustomButton
             disabled={reCaptchaStatus ? false : true}
             type="submit"
             className="mt-5! w-full"
             textName={isSubmitting ? "Logging...." : "Login"}
-          />
+          /> */}
+          <div className="text-center">
+            <button
+              disabled={!reCaptchaStatus}
+              className={`mt-4 w-full text-white font-semibold px-6 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out transform
+      ${
+        reCaptchaStatus
+          ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-500 hover:to-blue-600 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+          : "bg-gray-400 cursor-not-allowed opacity-50"
+      }
+    `}
+              type="submit"
+            >
+              {isSubmitting ? "Logging..." : "Login"}
+            </button>
+          </div>
         </form>
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">
         Do not have any account?
-        <Link href="/register" className="text-primary ml-2">
+        <Link href="/register" className="text-[#4F46E5] ml-2">
           Register
+        </Link>
+      </p>
+      <p className="text-sm text-gray-600 text-center my-3">
+        If you come here by mistack Plase go
+        <Link href="/" className="text-[#4F46E5] ml-2">
+          Home Page
         </Link>
       </p>
     </div>

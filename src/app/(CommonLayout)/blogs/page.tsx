@@ -1,17 +1,4 @@
-"use client";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import "aos/dist/aos.css";
-import Autoplay from "embla-carousel-autoplay";
-
-import { useRouter } from "next/navigation";
-import React from "react";
-import BlogCard from "./BlogCard";
+import AllBlogs from "@/components/modules/blogs/AllBlogsPage/AllBlogs";
 const blogs = [
   {
     id: "1",
@@ -90,55 +77,12 @@ const blogs = [
     description: "abc abcd",
   },
 ];
-
-export function LeatestBlogs() {
-  const router = useRouter();
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  );
+const AllBlogsPages = () => {
   return (
-    <div className="max-full">
-      <div className="mb-8 text-center">
-        <h2 className="text-4xl font-extrabold text-center mb-2 py-2 bg-gradient-to-r from-[#4F46E5] to-rose-500 bg-clip-text text-transparent tracking-wide">
-          Leatest Blogs
-        </h2>
-        <p className="text-sm text-[#4F46E5]">
-          Discover our most populer blogs.
-        </p>
-      </div>
-      <div className="text-end pr-24 ">
-        <button
-          className=" text-black drop-shadow-lg hover:text-gray-600 h-12 cursor-pointer font-semibold"
-          onClick={() => router.push("/blogs")}
-        >
-          View All
-        </button>
-      </div>
-
-      <div className=" flex items-center justify-center">
-        <Carousel
-          plugins={[plugin.current]}
-          onMouseEnter={plugin.current.stop}
-          onMouseLeave={plugin.current.reset}
-          className="w-[90%] "
-        >
-          <CarouselContent className="-ml-1">
-            {blogs.map((blog) => (
-              <CarouselItem
-                key={blog.id}
-                // className="basis-full"
-                className="pl-1 md:basis-1/2 lg:basis-1/3"
-              >
-                <div className="p-1">
-                  <BlogCard blog={blog} />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </div>
+    <div>
+      <AllBlogs blogs={blogs} />
     </div>
   );
-}
+};
+
+export default AllBlogsPages;
