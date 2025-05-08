@@ -95,11 +95,11 @@ export function LeatestBlogs() {
   return (
     <div className="max-full">
       <div className="mb-8 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">
+        <h2 className="text-4xl font-extrabold text-center mb-2 py-2 bg-gradient-to-r from-[#4F46E5] to-rose-500 bg-clip-text text-transparent tracking-wide">
           Leatest Blogs
         </h2>
-        <p className="text-sm text-muted-foreground">
-          Discover our top-selling in-stock items.
+        <p className="text-sm text-[#4F46E5]">
+          Discover our most populer blogs.
         </p>
       </div>
       <div className=" flex items-center justify-center">

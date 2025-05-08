@@ -70,7 +70,7 @@ const cards = [
 ];
 const OfferCarousel = () => {
   return (
-    <div className="">
+    <div id="offer" className="">
       <div className="flex items-center justify-center p-10">
         <div className="w-[90%] max-w-screen-xl mx-auto ">
           <Swiper

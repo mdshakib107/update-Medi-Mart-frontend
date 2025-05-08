@@ -2,7 +2,6 @@
 "use client";
 
 // import PrescriptionUploader from "@/components/PrescriptionUploader/PrescriptionUploader";
-import CustomButton from "@/components/shared/CustomButton";
 import {
   CartProduct,
   orderedMedicinesSelector,
@@ -12,9 +11,11 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 // import { useState } from "react";
 import PrescriptionUploader from "@/components/PrescriptionUploader/PrescriptionUploader";
+import { Button } from "@/components/ui/button";
 import { useUser } from "@/contexts/UserContext";
 import { createOrder } from "@/services/cart";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 // Optional currency formatter
@@ -45,10 +46,10 @@ const PaymentDetails = () => {
   const router = useRouter();
 
   //* state for prescription
-  // const [isPrescriptionUploaded, setPrescriptionUploaded] = useState(false);
+  const [isPrescriptionUploaded, setPrescriptionUploaded] = useState(false);
 
   const handlePrescriptionUpload = () => {
-    // setPrescriptionUploaded(true);
+    setPrescriptionUploaded(true);
   };
 
   const subTotal = cart.medicines.reduce(
@@ -60,10 +61,10 @@ const PaymentDetails = () => {
   const shippingCost = !cart.city ? 0 : cart.city === "Dhaka" ? 50 : 300;
   const grandTotal = subTotal + shippingCost;
 
-  // const isOrderDisabled = cart.medicines.some(
-  //   (product) =>
-  //     product.requiredPrescription === "Yes" && !isPrescriptionUploaded
-  // );
+  const isOrderDisabled = cart.medicines.some(
+    (product) =>
+      product.requiredPrescription === "Yes" && !isPrescriptionUploaded
+  );
 
   const anyPrescriptionRequiredItem = cart.medicines.find(
     (product) => product.requiredPrescription === "Yes"
@@ -79,10 +80,10 @@ const PaymentDetails = () => {
         router.push("/login");
         throw new Error("Please login first.");
       }
-      // if (isOrderDisabled) {
-      //   toast.error("Prescription is required!");
-      //   return; //? Prevent ordering without prescription
-      // }
+      if (isOrderDisabled) {
+        toast.error("Prescription is required!");
+        return; //? Prevent ordering without prescription
+      }
       if (!cart.city) {
         throw new Error("City is missing");
       }
@@ -97,13 +98,13 @@ const PaymentDetails = () => {
       const orderData = {
         ...order,
         user: user.user._id as string,
+        shippingCost: shippingCost as number,
         totalPrice: grandTotal as number,
       };
 
       const token = localStorage.getItem("authToken");
 
-      //
-      // .log(orderData);
+      //! console.log(orderData);
 
       //* Perform order submission logic (e.g., sending data to an API)
       const res = await createOrder(orderData, token as string);
@@ -155,12 +156,20 @@ const PaymentDetails = () => {
         />
       )}
 
-      <CustomButton
+      {/* <CustomButton
         textName="Order Now"
         handleAnything={handleOrder}
-        className="w-full font-semibold py-1!"
+        className="w-full py-1!"
         // disabled={isOrderDisabled}
-      />
+      /> */}
+      <Button
+        variant="outline"
+        onClick={handleOrder}
+        className="font-semibold w-full"
+        // disabled={isOrderDisabled}
+      >
+        Order Now
+      </Button>
     </div>
   );
 };

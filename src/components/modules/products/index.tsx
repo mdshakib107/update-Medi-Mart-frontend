@@ -20,9 +20,10 @@ const AllProducts = () => {
 
   return (
     <div className="m-4 md:m-10">
-      <h1 className="text-3xl font-semibold text-center m-4 md:m-8">
-        Medicines
+      <h1 className="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-[#4F46E5] to-rose-500 bg-clip-text text-transparent tracking-wide">
+        Explore Our Medicine Collection
       </h1>
+
       <div>
         <div className="relative w-full aspect-[3/1] sm:aspect-[16/5] md:aspect-[16/4] lg:aspect-[16/3]">
           <Image
